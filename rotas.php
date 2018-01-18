@@ -8,7 +8,16 @@ require __DIR__ . '/rotas/fornecedores.php';
 require __DIR__ . '/rotas/login.php';
 require __DIR__ . '/rotas/produtos.php';
 
-// Criar rota before em $auth aqui ...
+
+$auth->before(function () use ($app){
+    if(!BaseAuth::validate()){
+        return $app->redirect(URL_BASE);
+    }
+    
+});
+    
+
+
 // verificar a session
 
 $auth->get('/logout', function() use ($app){

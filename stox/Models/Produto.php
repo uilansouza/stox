@@ -48,7 +48,11 @@ class Produto
     
     public static function all()
     {
-        // Criar o Join via DB::table('produtos')
+        Return DB::table('produtos')
+                    ->join('fornecedores', 'fornecedores.id','=','produtos.fornecedor_id')
+                    ->select('produtos.*','fornecedores.nome as fornecedor')
+                    ->orderBy('produtos.id')
+                    ->get();
     }
     
     public static function byId($id)

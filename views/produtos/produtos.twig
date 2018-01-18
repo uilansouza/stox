@@ -23,25 +23,26 @@
         <th>Fornecedor</th>
         <th></th>
     </tr>
-        <!-- loop aqui de produtos -->
+        {% for prod in produtos %}
         <tr>
-            <td>1</td>
-            <td>Produto teste</td>
-            <td>Descrição do produto aqui</td>
-            <td>2</td>
-            <td>Fornecedor aqui</td>
-            <td>
-                <a href="{{app.url_auth}}/produtos/alterar/1">
+            <td>{{prod.id}}</td>
+            <td>{{prod.produto}}</td>
+            <td>{{prod.descricao}}</td>
+            <td>{{prod.estoque}}</td>
+            <td>{{prod.fornecedor}}</td>
+            <td> 
+                <a href="{{app.url_auth}}/produtos/alterar/{{prod.id}}">
                     <div class="btn btn-default">Alterar</div>
                 </a>
-                <a href="{{app.url_auth}}/produtos/retirar/1">
+                <a href="{{app.url_auth}}/produtos/retirar/{{prod.id}}">
                     <div class="btn btn-primary">Retirar</div>
                 </a>
-                <a href="{{app.url_auth}}/produtos/delete/1">
+                <a href="{{app.url_auth}}/produtos/delete/{{prod.id}}">
                     <div class="btn btn-danger">Excluir</div>
                 </a>
             </td>
         </tr>
+        {% endfor %}
 </table>
 <p>
     <a class="btn btn-primary" href="{{app.url_auth}}/relatorio">

@@ -41,7 +41,10 @@ class LoginController
             return $app->redirect(URL_BASE);
         }
         
-        // Verificar login aqui ...
+        if($auth->login($req->get('email'), $req->get('senha'))){
+            $auth->grant();// graca na sessão e atribui o tempo de expiração
+            return $app->redirect(URL_AUTH.'/home');
+        }
         
         session()->set('error', 'Usuário ou senha inválido');
         return $app->redirect(URL_BASE);

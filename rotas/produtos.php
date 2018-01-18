@@ -8,7 +8,7 @@ $auth->get('/produtos', "$ctrl::produtos");
 $auth->get('/produtos/cadastrar', "$ctrl::cadastrar");
 $auth->post('/produtos/add', "$ctrl::add");
 
-// colocar rota retirar aqui
+$auth->get('/produtos/retirar/{id}',"$ctrl::retirar");
 
 $auth->get('/produtos/alterar/{id}', "$ctrl::alterar");
 $auth->match('/produtos/update/{id}', "$ctrl::update")

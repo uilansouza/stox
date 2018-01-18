@@ -15,7 +15,10 @@ class ProdutosController
     
     public function produtos()
     {
-        return view()->render('produtos/produtos.twig');
+        $prods = Produto::all();
+        return view()->render('produtos/produtos.twig',[
+            'produtos'=>$prods
+        ]);
     }
     
     public function produtosRelatorio()
@@ -47,7 +50,16 @@ class ProdutosController
         return $app->redirect(URL_AUTH . '/produtos');
     }
     
-    // Criar método retirar() aqui
+    public function retirar(Application  $app, $id) 
+   {
+      if(Produto::retirar($id)){
+          return $app->redirect(URL_AUTH.'/produtos');
+      }
+      session()->set('error','Produto Não retirado');
+      return $app->redirect(URL_AUTH.'/produtos');
+      
+        
+    }
     
     public function alterar($id)
     {
@@ -59,12 +71,26 @@ class ProdutosController
     
     public function update(Application $app, $id)
     {
-        // Realizar Update aqui ...
+       $req = $app['request']->request;
+       $prod = Produto::byId($id);
+       $prod->set($req->all());
+       if($prod->update()){
+           session()->set('success','Produto Alterado');
+           return $app->redirect(URL_AUTH.'/produtos');
+       }
+        session()->set('error','Erro ao Alterar Produto');
+        return $app->redirect(URL_AUTH.'/produtos');
     }
     
     public function delete(Application $app, $id)
     {
-        // Realizar exclusão aqui ...
+        if(Produto::delete($id)){
+            session()->set('success','Produto Excluido com sucesso');
+            return $app->redirect(URL_AUTH.'/produtos');
+             
+        }
+         session()->set('error','Error ao Excluir');
+         return $app->redirect(URL_AUTH.'/produtos');
     }
     
     public function relatorio(Application $app)
